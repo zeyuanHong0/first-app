@@ -20,9 +20,9 @@ export default function AppNavigator() {
         initialRouteName="Home"
         screenOptions={{
           headerStyle: {
-            backgroundColor: theme.navigationColor,
+            backgroundColor: theme.navBackground,
           },
-          headerTintColor: theme.textColor,
+          headerTintColor: theme.title,
           headerTitleStyle: {
             fontWeight: 'bold',
           },
