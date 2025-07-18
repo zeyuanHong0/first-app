@@ -6,10 +6,33 @@ import { useColorScheme } from 'react-native';
 import { Colors } from '../../constants/Colors';
 
 import Home from '../screens/Home';
-import About from '../screens/About';
+import Login from '../screens/auth/Login';
+import Register from '../screens/auth/Register';
+
+const AuthStack = createNativeStackNavigator();
+export function AuthNavigator() {
+  return (
+    <AuthStack.Navigator
+      initialRouteName="Login"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <AuthStack.Screen
+        name="Login"
+        component={Login}
+        options={{ animation: 'none' }}
+      />
+      <AuthStack.Screen
+        name="Register"
+        component={Register}
+        options={{ animation: 'none' }}
+      />
+    </AuthStack.Navigator>
+  );
+}
 
 const Stack = createNativeStackNavigator();
-
 export default function AppNavigator() {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme ?? 'light'];
@@ -33,7 +56,11 @@ export default function AppNavigator() {
           component={Home}
           options={{ headerShown: true }}
         />
-        <Stack.Screen name="About" component={About} />
+        <Stack.Screen
+          name="Auth"
+          component={AuthNavigator}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
