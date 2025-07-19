@@ -1,12 +1,16 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View, Dimensions } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, useColorScheme } from 'react-native';
 
 import ThemedView from '../components/ThemedView';
 import ThemedLogo from '../components/ThemedLogo';
 import ThemedText from '../components/ThemedText';
 import Spacer from '../components/Spacer';
+import { Colors } from '../../constants/Colors';
 
 const Home = ({ navigation }: any) => {
+  const colorScheme = useColorScheme();
+  const primaryColor = Colors.primary; // 使用全局定义的主色
+  
   return (
     <ThemedView style={styles.container}>
       <View style={styles.upperContainer}>
@@ -21,19 +25,40 @@ const Home = ({ navigation }: any) => {
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          style={styles.buttonPrimary}
+          style={[
+            styles.buttonPrimary,
+            { backgroundColor: primaryColor }
+          ]}
           onPress={() => navigation.navigate('Auth', { screen: 'Login' })}
         >
-          <ThemedText style={styles.buttonText}>登 录</ThemedText>
+          <ThemedText style={[
+            styles.buttonText,
+            colorScheme === 'dark' ? { color: '#fff' } : {}
+          ]}>
+            登 录
+          </ThemedText>
         </TouchableOpacity>
 
         <Spacer height={16} />
 
         <TouchableOpacity
-          style={styles.buttonSecondary}
+          style={[
+            styles.buttonSecondary,
+            { 
+              borderColor: primaryColor,
+              backgroundColor: colorScheme === 'dark' ? 'rgba(104, 73, 167, 0.1)' : 'transparent'
+            }
+          ]}
           onPress={() => navigation.navigate('Auth', { screen: 'Register' })}
         >
-          <ThemedText style={styles.buttonTextSecondary}>注 册</ThemedText>
+          <ThemedText 
+            style={[
+              styles.buttonTextSecondary,
+              { color: primaryColor }
+            ]}
+          >
+            注 册
+          </ThemedText>
         </TouchableOpacity>
 
         <Spacer height={30} />
@@ -78,7 +103,6 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   buttonPrimary: {
-    backgroundColor: '#5271FF',
     borderRadius: 12,
     paddingVertical: 16,
     alignItems: 'center',
@@ -89,12 +113,10 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   buttonSecondary: {
-    backgroundColor: 'transparent',
     borderRadius: 12,
     paddingVertical: 15,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#5271FF',
   },
   buttonText: {
     fontSize: 18,
@@ -104,7 +126,6 @@ const styles = StyleSheet.create({
   buttonTextSecondary: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#5271FF',
   },
   footerText: {
     textAlign: 'center',
