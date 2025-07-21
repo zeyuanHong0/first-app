@@ -1,5 +1,11 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View, useColorScheme } from 'react-native';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  useColorScheme,
+} from 'react-native';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
 import ThemedView from '../components/ThemedView';
 import ThemedLogo from '../components/ThemedLogo';
@@ -10,7 +16,19 @@ import { Colors } from '../../constants/Colors';
 const Home = ({ navigation }: any) => {
   const colorScheme = useColorScheme();
   const primaryColor = Colors.primary; // 使用全局定义的主色
-  
+
+  const handleNavigate = (route: string, nestedScreen?: string) => {
+    ReactNativeHapticFeedback.trigger('impactMedium', {
+      enableVibrateFallback: true,
+      ignoreAndroidSystemSettings: false,
+    });
+    if (nestedScreen) {
+      navigation.navigate(route, { screen: nestedScreen });
+    } else {
+      navigation.navigate(route);
+    }
+  };
+
   return (
     <ThemedView style={styles.container}>
       <View style={styles.upperContainer}>
@@ -25,16 +43,15 @@ const Home = ({ navigation }: any) => {
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          style={[
-            styles.buttonPrimary,
-            { backgroundColor: primaryColor }
-          ]}
-          onPress={() => navigation.navigate('Auth', { screen: 'Login' })}
+          style={[styles.buttonPrimary, { backgroundColor: primaryColor }]}
+          onPress={() => handleNavigate('Auth', 'Login')}
         >
-          <ThemedText style={[
-            styles.buttonText,
-            colorScheme === 'dark' ? { color: '#fff' } : {}
-          ]}>
+          <ThemedText
+            style={[
+              styles.buttonText,
+              colorScheme === 'dark' ? { color: '#fff' } : {},
+            ]}
+          >
             登 录
           </ThemedText>
         </TouchableOpacity>
@@ -44,18 +61,18 @@ const Home = ({ navigation }: any) => {
         <TouchableOpacity
           style={[
             styles.buttonSecondary,
-            { 
+            {
               borderColor: primaryColor,
-              backgroundColor: colorScheme === 'dark' ? 'rgba(104, 73, 167, 0.1)' : 'transparent'
-            }
+              backgroundColor:
+                colorScheme === 'dark'
+                  ? 'rgba(104, 73, 167, 0.1)'
+                  : 'transparent',
+            },
           ]}
-          onPress={() => navigation.navigate('Auth', { screen: 'Register' })}
+          onPress={() => handleNavigate('Auth', 'Register')}
         >
-          <ThemedText 
-            style={[
-              styles.buttonTextSecondary,
-              { color: primaryColor }
-            ]}
+          <ThemedText
+            style={[styles.buttonTextSecondary, { color: primaryColor }]}
           >
             注 册
           </ThemedText>
