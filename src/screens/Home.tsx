@@ -7,11 +7,12 @@ import {
 } from 'react-native';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
+import { Colors } from '../../constants/Colors';
+
 import ThemedView from '../components/ThemedView';
 import ThemedLogo from '../components/ThemedLogo';
 import ThemedText from '../components/ThemedText';
 import Spacer from '../components/Spacer';
-import { Colors } from '../../constants/Colors';
 
 const Home = ({ navigation }: any) => {
   const colorScheme = useColorScheme();
@@ -40,6 +41,10 @@ const Home = ({ navigation }: any) => {
           Discover, organize, and enjoy your favorite books
         </ThemedText>
       </View>
+      <Spacer height={12} />
+      <ThemedText onPress={() => handleNavigate('Dashboard', 'Profile')}>
+        to profile
+      </ThemedText>
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
